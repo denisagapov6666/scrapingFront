@@ -226,7 +226,7 @@ const App = () => {
         if(res.data.success){
           setLoading(false);
           success(`${res.data.data.new} Product(s) is(are) added and ${res.data.data.removed} Product(s) is(are) removed.`);
-          setFilter('new');
+          setTimeout(window.location.reload(),3000);
         } 
       })
   }
@@ -236,8 +236,8 @@ const App = () => {
     axios.get('https://scrapingback.onrender.com/delete_data')
       .then(async res => {
         setLoading(false);
-        setFilter("all");
         message.success(res.data.message);
+        window.location.reload();
       })
   };
   const [messageApi, contextHolder] = message.useMessage();
