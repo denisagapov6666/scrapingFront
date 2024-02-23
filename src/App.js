@@ -11,7 +11,7 @@ const columns = [
     render: (images,record) => {
       return <>
        <div style={{ position: 'relative', width: '100px', height: '100px' }}>
-          <a href={images[0]}>
+          <a href={images[0]} target="_blank" rel="noopener noreferrer">
             <img width="100px" height="100px" src={images[0]} alt={images[0]} />
             {record.addRemove === 'new' && <p style={{ position: 'absolute', top: 0, left: 0, backgroundColor: 'green', color: 'white', padding: '2px' }}>New</p>}
             {record.addRemove === 'deleted' && <p style={{ position: 'absolute', top: 0, left: 0, backgroundColor: 'red', color: 'white', padding: '2px' }}>Removed</p>}
@@ -131,7 +131,7 @@ const columns = [
         <div>
           {images.slice(1).map((image, index) => (
             // Use the combination of image URL and index as a unique key
-            <a key={image + index} href={image}>
+            <a key={image + index} href={image} target="_blank" rel="noopener noreferrer">
               <img width="40px" height="40px" src={image} alt={`product-${index}`} style={{ marginLeft: '5px' }} />
             </a>
           ))}
