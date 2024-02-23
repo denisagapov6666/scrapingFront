@@ -132,7 +132,7 @@ const columns = [
           {images.slice(1).map((image, index) => (
             // Use the combination of image URL and index as a unique key
             <a key={image + index} href={image} target="_blank" rel="noopener noreferrer">
-              <img width="40px" height="40px" src={image} alt={`product-${index}`} style={{ marginLeft: '5px' }} />
+              <img width="40px" height="40px" src={image} alt={`product-${index}`} style={{ margin: '5px' }} />
             </a>
           ))}
         </div>
