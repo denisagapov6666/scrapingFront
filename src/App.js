@@ -117,7 +117,6 @@ const columns = [
       );
     },
     width: 130,
-    fixed:'right'
   }
   
 ];
