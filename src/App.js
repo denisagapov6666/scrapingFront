@@ -269,9 +269,6 @@ const App = () => {
         loading={loading}
         columns={columns}
         dataSource={data.map(product => ({ ...product, url: product.url.url, key: product._id, addRemove: product.url.new ? 'new' : product.url.deleted ? 'deleted' : '' }))}
-        scroll={{
-          x: 1500
-        }}
         pagination={{
           ...pagination,
           onChange: handleChange
