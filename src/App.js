@@ -13,7 +13,8 @@ const columns = [
       return <div style={{textAlign:'center'}}>
         <a style={{textTransform: 'uppercase' }} href={record.url+'?sku='+productSku}>{productSku}</a>  
       </div>
-    }
+    },
+    fixed:"left"
   },
   {
     title: 'Product Name',
@@ -117,6 +118,7 @@ const columns = [
       );
     },
     width: 130,
+    fixed:"right",
   }
   
 ];
