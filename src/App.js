@@ -117,7 +117,7 @@ const columns = [
         </div>
       );
     },
-    width: 130,
+    width: 230,
     fixed:"right",
   }
   
