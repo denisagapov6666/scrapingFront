@@ -108,7 +108,7 @@ const columns = [
     render: (images) => {
       // Render all images except the first one inside an anchor tag with a unique key
       return (
-        <div style={{width:"100px"}}>
+        <div style={{width:"100px", textAlign:"center"}}>
           {images.slice(0).map((image, index) => (
             // Use the combination of image URL and index as a unique key
             <a key={image + index} href={image} target="_blank" rel="noopener noreferrer">
