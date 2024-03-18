@@ -200,9 +200,12 @@ const Prestige = ({scrollvalue}) => {
     axios.get(`http://localhost:8081/prestige/get_products_info`)
     .then(async res => {
       setHistory(res.data.history)
-      const lastHistoryDate = res.data.history[res.data.history.length - 1].createdAt;
-      const finalScrapingDate = moment(lastHistoryDate).format("MMM DD YYYY");
-      setFinalScrapingDate(finalScrapingDate);
+      const historyLength = res.data.history.length;
+        if(historyLength>0){
+          const lastHistoryDate = res.data.history[historyLength - 1].createdAt;
+          const finalScrapingDate = moment(lastHistoryDate).format("MMM DD YYYY");
+          setFinalScrapingDate(finalScrapingDate);
+        }
       // Make sure `res.data.total` correctly represents the total number of items available in the backend
       setPagination(prevPagination => ({
         ...prevPagination,
