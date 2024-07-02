@@ -93,7 +93,7 @@ const MainTable = ({ current, getBadgeData }) => {
 
     // Define columns for Excel
     const excelColumns = columns
-      .filter(column => column.title !== 'Thumb Image' && column.title !== 'Other Images') // Exclude Thumb Image and Other Images columns
+      .filter(column => column.title !== 'Thumb Image' && column.title !== 'Other Images' && column.title !== 'Images') // Exclude Thumb Image and Other Images columns
       .map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
       
     excelColumns.push({ title: 'Status', dataIndex: 'status', key: 'status'});
