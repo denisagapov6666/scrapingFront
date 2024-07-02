@@ -95,11 +95,14 @@ const MainTable = ({ current, getBadgeData }) => {
     const excelColumns = columns
       .filter(column => column.title !== 'Thumb Image' && column.title !== 'Other Images') // Exclude Thumb Image and Other Images columns
       .map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
-
+      
+    excelColumns.push({ title: 'Status', dataIndex: 'status', key: 'status'});
+    
     // Add image columns
     for (let i = 0; i <= 10; i++) {
       excelColumns.push({ title: `Image ${i + 1}`, dataIndex: `image_${i}`, key: `image_${i}` });
     }
+
 
     // Add data source
     const excelDataSource = data.map(product => {
@@ -120,6 +123,7 @@ const MainTable = ({ current, getBadgeData }) => {
         }
       }
 
+      rowData['status'] = product.url.new ? 'New' : (product.url.deleted ? 'Removed' : '');
       return rowData;
     });
 
