@@ -294,7 +294,7 @@ const MainTable = ({ current, getBadgeData }) => {
       {
         contextHolder
       }
-      <div style={{ position: "fixed", zIndex: "100", top: "64px", padding: "0px 20px", justifyContent: "space-between", backgroundColor: "white", display: "flex", width: "86vw" }}>
+      <div style={{ position: "fixed", zIndex: "100", top: "64px", padding: "0px 20px", justifyContent: "space-between", backgroundColor: "white", display: "flex", width: "86vw", flexWrap: "wrap", gap: "10px" }}>
         <div style={{ display: "flex" }}>
           <div>
             <Select

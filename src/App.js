@@ -37,15 +37,6 @@ const App = () => {
               mode="inline"
               defaultSelectedKeys={['1']}
             >
-              <Menu.Item key="1" style={{ display: "flex", alignItems: "center" }} icon={<img src='./prestige.png' alt='prestige' width="20px" />} onClick={() => changeHeader(0)}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ marginRight: "3px" }}>Prestige</span>
-                  <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newprestigeAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedprestigeAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px" }} />
-                  </div>
-                </div>
-              </Menu.Item>
               <Menu.Item key="2" style={{ display: "flex", alignItems: "center" }} icon={<img src='./couristan.png' width="20px" alt='couristan' />} onClick={() => changeHeader(1)}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Couristan</span>
@@ -70,6 +61,15 @@ const App = () => {
                   <div style={{ alignItems: "right" }}>
                     <Badge count={newdeleteamount.newfibreAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
                     <Badge count={newdeleteamount.deletedfibreAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                  </div>
+                </div>
+              </Menu.Item>
+              <Menu.Item key="1" style={{ display: "flex", alignItems: "center" }} icon={<img src='./prestige.png' alt='prestige' width="20px" />} onClick={() => changeHeader(0)}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ marginRight: "3px" }}>Prestige</span>
+                  <div style={{ alignItems: "right" }}>
+                    <Badge count={newdeleteamount.newprestigeAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedprestigeAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px" }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -216,7 +216,7 @@ const App = () => {
             style={{
               minHeight: 280,
               backgroundColor: "white",
-              marginTop: "110px"
+              marginTop: "130px"
             }}
           >
             <MainTable current={headerTitle} getBadgeData={getBadgeData} />
