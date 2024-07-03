@@ -74,7 +74,7 @@ const MainTable = ({ current, getBadgeData }) => {
             total: res.data.data.total, // This should be the total number of items, not the number of items in the current page
             pageSizeOptions: res.data.data.total > 100 ? [20, 50, 100, res.data.data.total] : [20, 50, 100],
           }));
-          success(`${res.data.data.new} Product(s) is(are) added and ${res.data.data.removed} Product(s) is(are) removed.`);
+          success(`${res.data.data.new} products added and ${res.data.data.removed} products removed.`);
           // await setTimeout(window.location.reload(),3000);
         } else {
           setLoading(false);
@@ -329,9 +329,9 @@ const MainTable = ({ current, getBadgeData }) => {
           </Button>
           {/* <Button type='primary' onClick={modalControl1} disabled={loading} danger style={{ margin: "10px" }}>Setting</Button> */}
           <Modal
-            title={`History that scrape in ${current} page`}
+            title={`${current} Scrape History`}
             centered
-            footer="Please use DatePicker Filter Function to see more detail product information"
+            footer="Please use DatePicker to filter the products by scrapted date"
 
             open={modal2Open}
             onOk={() => setModal2Open(false)}
@@ -341,9 +341,9 @@ const MainTable = ({ current, getBadgeData }) => {
               dataSource={modalData}
               key="2"
               columns={[
-                { title: 'Scraping Date', dataIndex: 'scrapingDate', key: 'scrapingDate', align: "center" },
-                { title: 'Added Amount', dataIndex: 'addedAccount', key: 'addedAccount', align: "center" },
-                { title: 'Deleted Amount', dataIndex: 'deletedAccount', key: 'deletedAccount', align: "center" },
+                { title: 'Date', dataIndex: 'scrapingDate', key: 'scrapingDate', align: "center" },
+                { title: 'New Products', dataIndex: 'addedAccount', key: 'addedAccount', align: "center" },
+                { title: 'Removed Products', dataIndex: 'deletedAccount', key: 'deletedAccount', align: "center" },
               ]}
               pagination={false} // Disable pagination if all data fits in the modal
             />
