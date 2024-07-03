@@ -62,8 +62,8 @@ const MainTable = ({ current, getBadgeData }) => {
 
     axios.get(`${API_URL}/${settings[current.toString().toLowerCase()].api[1]}`)
       .then(async res => {
-        getBadgeData(res.data.newdeleteamount);
         if (res.data.success) {
+          getBadgeData(res.data.newdeleteamount);
           setHistory(res.data.data.history)
           setFinalScrapingDate(moment(res.data.data.history[res.data.data.history.length - 1].createdAt).format("MMM DD YYYY"))
           setLoading(false);
