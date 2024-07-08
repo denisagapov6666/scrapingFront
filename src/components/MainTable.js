@@ -89,7 +89,10 @@ const MainTable = ({ current, getBadgeData }) => {
         if (res.data.success) {
           getBadgeData(res.data.newdeleteamount);
           setHistory(res.data.data.history)
-          setFinalScrapingDate(moment(res.data.data.history[res.data.data.history.length - 1].createdAt).format("MMM DD YYYY"))
+          const historyLength = res.data.data.history.length;
+          if (historyLength > 0) {
+            setFinalScrapingDate(moment(res.data.data.history[res.data.data.history.length - 1].createdAt).format("MMM DD YYYY"))
+          }
           setLoading(false);
           setData(res.data.data.products);
           setOriginData(res.data.data.products);
