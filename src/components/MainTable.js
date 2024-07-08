@@ -6,6 +6,8 @@ import moment from 'moment';
 import { settings } from '../utils/static'
 import 'antd/dist/reset.css';
 import { API_URL } from '../constants/constant';
+import Pusher from 'pusher-js';
+
 const { RangePicker } = DatePicker;
 
 const MainTable = ({ current, getBadgeData }) => {
@@ -23,10 +25,32 @@ const MainTable = ({ current, getBadgeData }) => {
   })
   const [history, setHistory] = useState([]);
   const [modalData, setModalData] = useState([]);
+  const [logModalOpen, setLogModalOpen] = useState(false);
+  const [logs, setLogs] = useState([]);
   const [finalScrapingDate, setFinalScrapingDate] = useState('');
   const [noDataMessage, setNoDataMessage] = useState('');
   const [form] = Form.useForm();
 
+  const [inited, setInited] = useState(false);
+  useEffect(() => {
+    if (!inited) {
+      setInited(true);
+      // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+
+      var pusherInstance = new Pusher('7c3db511a2a45729fe27', {
+        cluster: 'eu'
+      });
+
+      var channel = pusherInstance.subscribe('dezigned');
+      channel.bind('scraping', function(data) {
+        if (data?.message?._id) {
+          updateLogByPusher(data.message);
+        }
+      });
+      console.log('init puser')
+    }
+  }, [inited])
   useEffect(() => {
 
     setLoading(true)
@@ -207,24 +231,24 @@ const MainTable = ({ current, getBadgeData }) => {
   };
   const [messageApi, contextHolder] = message.useMessage();
 
-  const info = () => {
+  const info = (msg = null) => {
     messageApi.info({
-      content: "Please wait while we process it. You will be notified once it's completed",
+      content: msg ? msg : "Please wait while we process it. You will be notified once it's completed",
       className: 'custom-class',
-      style: {
-        marginTop: '10vh',
-      },
-      duration: 5,
+      // style: {
+      //   marginTop: '10vh',
+      // },
+      // duration: 5,
     });
   };
   const success = (msg) => {
     messageApi.open({
       type: 'success',
       content: msg,
-      duration: 5,
-      style: {
-        marginTop: '10vh'
-      }
+      // duration: 5,
+      // style: {
+      //   marginTop: '10vh'
+      // }
     });
   };
   const [modal2Open, setModal2Open] = useState(false);
@@ -289,6 +313,39 @@ const MainTable = ({ current, getBadgeData }) => {
       }
     })
   };
+
+  const updateLogByPusher = (message) => {
+    if (message) {
+      console.log(message)
+      setLogs( prevLogs => {
+        const exist = prevLogs.findIndex(l => l._id === message._id);
+        if (exist === -1) {
+          info(message.message);
+          return [...prevLogs, message]
+        } else {
+          return prevLogs;
+        }
+      });
+    }
+  }
+  const updateLogs = () => {
+    axios.get(`${API_URL}/logs?count=100`)
+      .then(async res => {
+        if (res.data.success) {
+          console.log(res.data.logs);
+          if ( res.data.logs) {
+            setLogs(res.data.logs.reverse());
+          }
+        }
+      })
+  }
+  const handleShowLogs = () => {
+    updateLogs();
+    setLogModalOpen(true);
+  }
+  const closeShowModal = () => {
+    setLogModalOpen(false);
+  }
   return (
     <>
       {
@@ -322,10 +379,13 @@ const MainTable = ({ current, getBadgeData }) => {
 
         </div>
         <div>
-          <Button type='primary' disabled={loading} onClick={handleDownloadClick}>Download to Excel</Button>
-          <Button type='primary' disabled={loading} style={{ margin: "0px 10px", width: 130 }} onClick={handleStartScraping}>Start Scraping</Button>
-          <Button type="primary" onClick={modalControl} disabled={loading}>
-            Scraping History
+          <Button type='primary' disabled={loading} onClick={handleDownloadClick}>Download</Button>
+          <Button type='primary' disabled={loading} style={{ margin: "0px 10px"}} onClick={handleStartScraping}>Scraping</Button>
+          <Button type="primary" onClick={modalControl} disabled={loading}  style={{ marginRight: "10px" }}>
+            History
+          </Button>
+          <Button type="primary" onClick={handleShowLogs} disabled={loading}>
+            Logs
           </Button>
           {/* <Button type='primary' onClick={modalControl1} disabled={loading} danger style={{ margin: "10px" }}>Setting</Button> */}
           <Modal
@@ -347,6 +407,22 @@ const MainTable = ({ current, getBadgeData }) => {
               ]}
               pagination={false} // Disable pagination if all data fits in the modal
             />
+          </Modal>
+          <Modal
+            title={`Logs`}
+            centered
+            open={logModalOpen}
+            onOk={() => closeShowModal()}
+            onCancel={() => closeShowModal()}
+            width={780}
+          >
+            <div style={{ maxHeight: '70vh', overflowY: 'auto'}}>
+              { logs.map((log, ind) => {
+                return <div key={ind} style={{ color: log.status === 'error' ? 'red': 'black'}}>
+                  <b>[{log.createdAt?.split('.')[0]}][{log.site}]</b> - {log.message}
+                </div>
+              })}
+            </div>
           </Modal>
           <Modal
             title={`Set Cron Job and Email infromation in ${current} page`}
