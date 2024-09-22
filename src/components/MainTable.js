@@ -3,7 +3,7 @@ import { Table, message, Select, Button, Input, DatePicker, Modal, Form, InputNu
 import axios from 'axios';
 import { Excel } from "antd-table-saveas-excel";
 import moment from 'moment';
-import { settings } from '../utils/static'
+import { excelsheetColumns, settings } from '../utils/static'
 import 'antd/dist/reset.css';
 import { API_URL } from '../constants/constant';
 import Pusher from 'pusher-js';
@@ -119,14 +119,12 @@ const MainTable = ({ current, getBadgeData }) => {
     const excel = new Excel();
 
     // Define columns for Excel
-    const excelColumns = columns
-      .filter(column => column.title !== 'Thumb Image' && column.title !== 'Other Images' && column.title !== 'Images') // Exclude Thumb Image and Other Images columns
-      .map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
+    const excelColumns = excelsheetColumns.map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
       
     excelColumns.push({ title: 'Status', dataIndex: 'status', key: 'status'});
     
     // Add image columns
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i < 10; i++) {
       excelColumns.push({ title: `Image ${i + 1}`, dataIndex: `image_${i}`, key: `image_${i}` });
     }
 
@@ -142,7 +140,7 @@ const MainTable = ({ current, getBadgeData }) => {
       rowData.date = moment(product.url.updatedAt).format("YYYY-MM-DD");
 
       // Populate image data for each image column
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < 10; i++) {
         if (product.imageUrls[i]) {
           rowData[`image_${i}`] = product.imageUrls[i];
         } else {

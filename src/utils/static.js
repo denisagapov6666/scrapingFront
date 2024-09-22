@@ -35,11 +35,11 @@ const product_sku1 = {
         {
           ribbonText && (
             <>
-              <Badge.Ribbon key = "1" style={{ marginTop: "-40px", marginLeft: "-17px" }} color={ribbonColor} text={ribbonText} placement='start'></Badge.Ribbon>
+              <Badge.Ribbon key="1" style={{ marginTop: "-40px", marginLeft: "-17px" }} color={ribbonColor} text={ribbonText} placement='start'></Badge.Ribbon>
             </>
           )
         }
-        <a style={{ textTransform: 'uppercase', marginLeft: 20 }} key = "2" href={url+"?sku="+productSku} target="_blank" rel="noopener noreferrer">{productSku}</a>
+        <a style={{ textTransform: 'uppercase', marginLeft: 20 }} key="2" href={url+"?sku="+productSku} target="_blank" rel="noopener noreferrer">{productSku}</a>
       </>
     );
   },
@@ -113,7 +113,7 @@ const construction = {
   align: "center",
 }
 const width = {
-  title: 'Width',
+  title: 'Roll Width',
   dataIndex: 'width',
   key: 'width',
   width: 150,
@@ -240,9 +240,30 @@ const backing = {
   align: "center"
 }
 const material = {
-  title: 'Material',
-  dataIndex: 'backing',
-  key: 'backing',
+  title: 'Content Material',
+  dataIndex: 'fiberType',
+  key: 'fiberType',
+  width: 150,
+  align: "center"
+}
+const product_type = {
+  title: 'Product Type',
+  dataIndex: 'product_type',
+  key: 'product_type',
+  width: 150,
+  align: "center"
+}
+const design = {
+  title: 'Design',
+  dataIndex: 'design',
+  key: 'design',
+  width: 150,
+  align: "center"
+}
+const supplier_size = {
+  title: 'Supplier Size',
+  dataIndex: 'width',
+  key: 'width',
   width: 150,
   align: "center"
 }
@@ -268,7 +289,7 @@ const weight = {
   align: "center"
 }
 const application = {
-  title: 'Application',
+  title: 'Usage',
   dataIndex: 'usage',
   key: 'usage',
   width: 150,
@@ -810,3 +831,24 @@ export const settings = {
     ]
   },
 }
+
+export const excelsheetColumns = [
+  category,
+  product_type,
+  brand_name,
+  product_sku,
+  product_name,
+  color,
+  collection,
+  design,
+  price,
+  material,
+  supplier_size,
+  width,
+  pattern_repeat,
+  application,
+  style,
+  pattern,
+  construction,
+  date
+]
