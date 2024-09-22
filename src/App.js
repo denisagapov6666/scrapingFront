@@ -37,21 +37,12 @@ const App = () => {
               mode="inline"
               defaultSelectedKeys={['1']}
             >
-              <Menu.Item key="1" style={{ display: "flex", alignItems: "center" }} icon={<img src='./prestige.png' alt='prestige' width="20px" />} onClick={() => changeHeader(0)}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ marginRight: "3px" }}>Prestige</span>
-                  <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newprestigeAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedprestigeAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px" }} />
-                  </div>
-                </div>
-              </Menu.Item>
               <Menu.Item key="2" style={{ display: "flex", alignItems: "center" }} icon={<img src='./couristan.png' width="20px" alt='couristan' />} onClick={() => changeHeader(1)}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Couristan</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newcouristanAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedcouristanAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newcouristanAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedcouristanAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -59,8 +50,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Kaya</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newkayaAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedkayaAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newkayaAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedkayaAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -68,8 +59,17 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Fibre</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newfibreAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedfibreAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newfibreAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedfibreAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                  </div>
+                </div>
+              </Menu.Item>
+              <Menu.Item key="1" style={{ display: "flex", alignItems: "center" }} icon={<img src='./prestige.png' alt='prestige' width="20px" />} onClick={() => changeHeader(0)}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ marginRight: "3px" }}>Prestige</span>
+                  <div style={{ alignItems: "right" }}>
+                    <Badge count={newdeleteamount.newprestigeAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedprestigeAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px" }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -77,8 +77,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Blooms</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newbloomsburgAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedbloomsburgAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newbloomsburgAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedbloomsburgAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -86,8 +86,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Harcourt</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newharcourtAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedharcourtAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newharcourtAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedharcourtAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -95,8 +95,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Nourison</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newnourisonAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletednourisonAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newnourisonAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletednourisonAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -104,8 +104,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Kaleen</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newkaleenAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedkaleenAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newkaleenAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedkaleenAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -113,8 +113,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Fabrica</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newfabricaAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedfabricaAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newfabricaAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedfabricaAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -122,8 +122,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Dixie</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newdixieAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deleteddixieAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newdixieAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deleteddixieAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -131,8 +131,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Masland</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newmaslandAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedmaslandAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newmaslandAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedmaslandAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -140,8 +140,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Anderson</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newandersontuftexAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedandersontuftexAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newandersontuftexAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedandersontuftexAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -149,8 +149,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Wicanders</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newwicandersAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedwicandersAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newwicandersAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedwicandersAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -158,8 +158,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Shawfloor</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newshawfloorsAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedshawfloorsAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newshawfloorsAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedshawfloorsAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -167,8 +167,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Hardwood</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newhardwoodAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedhardwoodAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newhardwoodAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedhardwoodAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -176,8 +176,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Adorra</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newadorraAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedadorraAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newadorraAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedadorraAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -185,8 +185,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Rebel</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newrebelAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedrebelAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newrebelAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedrebelAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -194,8 +194,8 @@ const App = () => {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ marginRight: "3px" }}>Mohawk</span>
                   <div style={{ alignItems: "right" }}>
-                    <Badge count={newdeleteamount.newmohawkAmount} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
-                    <Badge count={newdeleteamount.deletedmohawkAmount} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
+                    <Badge count={newdeleteamount.newmohawkAmount} overflowCount={9999} style={{ backgroundColor: "green", padding: "0px 2px", borderColor: "green", marginRight: "2px" }} />
+                    <Badge count={newdeleteamount.deletedmohawkAmount} overflowCount={9999} style={{ backgroundColor: "red", borderColor: "red", padding: "0px 2px", }} />
                   </div>
                 </div>
               </Menu.Item>
@@ -216,7 +216,7 @@ const App = () => {
             style={{
               minHeight: 280,
               backgroundColor: "white",
-              marginTop: "110px"
+              marginTop: "130px"
             }}
           >
             <MainTable current={headerTitle} getBadgeData={getBadgeData} />

@@ -3,8 +3,11 @@ import { Table, message, Select, Button, Input, DatePicker, Modal, Form, InputNu
 import axios from 'axios';
 import { Excel } from "antd-table-saveas-excel";
 import moment from 'moment';
-import { settings } from '../utils/static'
+import { excelsheetColumns, settings } from '../utils/static'
 import 'antd/dist/reset.css';
+import { API_URL } from '../constants/constant';
+import Pusher from 'pusher-js';
+
 const { RangePicker } = DatePicker;
 
 const MainTable = ({ current, getBadgeData }) => {
@@ -22,14 +25,36 @@ const MainTable = ({ current, getBadgeData }) => {
   })
   const [history, setHistory] = useState([]);
   const [modalData, setModalData] = useState([]);
+  const [logModalOpen, setLogModalOpen] = useState(false);
+  const [logs, setLogs] = useState([]);
   const [finalScrapingDate, setFinalScrapingDate] = useState('');
   const [noDataMessage, setNoDataMessage] = useState('');
   const [form] = Form.useForm();
 
+  const [inited, setInited] = useState(false);
+  useEffect(() => {
+    if (!inited) {
+      setInited(true);
+      // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+
+      var pusherInstance = new Pusher('7c3db511a2a45729fe27', {
+        cluster: 'eu'
+      });
+
+      var channel = pusherInstance.subscribe('dezigned');
+      channel.bind('scraping', function(data) {
+        if (data?.message?._id) {
+          updateLogByPusher(data.message);
+        }
+      });
+      console.log('init puser')
+    }
+  }, [inited])
   useEffect(() => {
 
     setLoading(true)
-    axios.get(`https://scrapingback.onrender.com/${settings[current.toString().toLowerCase()].api[0]}`)
+    axios.get(`${API_URL}/${settings[current.toString().toLowerCase()].api[0]}`)
       .then(async res => {
         setHistory(res.data.data.history)
         const historyLength = res.data.data.history.length;
@@ -59,12 +84,15 @@ const MainTable = ({ current, getBadgeData }) => {
     setLoading(true);
     info();
 
-    axios.get(`https://scrapingback.onrender.com/${settings[current.toString().toLowerCase()].api[1]}`)
+    axios.get(`${API_URL}/${settings[current.toString().toLowerCase()].api[1]}`)
       .then(async res => {
-        getBadgeData(res.data.newdeleteamount);
         if (res.data.success) {
+          getBadgeData(res.data.newdeleteamount);
           setHistory(res.data.data.history)
-          setFinalScrapingDate(moment(res.data.data.history[res.data.data.history.length - 1].createdAt).format("MMM DD YYYY"))
+          const historyLength = res.data.data.history.length;
+          if (historyLength > 0) {
+            setFinalScrapingDate(moment(res.data.data.history[res.data.data.history.length - 1].createdAt).format("MMM DD YYYY"))
+          }
           setLoading(false);
           setData(res.data.data.products);
           setOriginData(res.data.data.products);
@@ -73,7 +101,7 @@ const MainTable = ({ current, getBadgeData }) => {
             total: res.data.data.total, // This should be the total number of items, not the number of items in the current page
             pageSizeOptions: res.data.data.total > 100 ? [20, 50, 100, res.data.data.total] : [20, 50, 100],
           }));
-          success(`${res.data.data.new} Product(s) is(are) added and ${res.data.data.removed} Product(s) is(are) removed.`);
+          success(`${res.data.data.new} products added and ${res.data.data.removed} products removed.`);
           // await setTimeout(window.location.reload(),3000);
         } else {
           setLoading(false);
@@ -91,14 +119,15 @@ const MainTable = ({ current, getBadgeData }) => {
     const excel = new Excel();
 
     // Define columns for Excel
-    const excelColumns = columns
-      .filter(column => column.title !== 'Thumb Image' && column.title !== 'Other Images') // Exclude Thumb Image and Other Images columns
-      .map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
-
+    const excelColumns = excelsheetColumns.map(column => ({ title: column.title, dataIndex: column.dataIndex, key: column.key }));
+      
+    excelColumns.push({ title: 'Status', dataIndex: 'status', key: 'status'});
+    
     // Add image columns
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i < 10; i++) {
       excelColumns.push({ title: `Image ${i + 1}`, dataIndex: `image_${i}`, key: `image_${i}` });
     }
+
 
     // Add data source
     const excelDataSource = data.map(product => {
@@ -111,7 +140,7 @@ const MainTable = ({ current, getBadgeData }) => {
       rowData.date = moment(product.url.updatedAt).format("YYYY-MM-DD");
 
       // Populate image data for each image column
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < 10; i++) {
         if (product.imageUrls[i]) {
           rowData[`image_${i}`] = product.imageUrls[i];
         } else {
@@ -119,6 +148,7 @@ const MainTable = ({ current, getBadgeData }) => {
         }
       }
 
+      rowData['status'] = product.url.new ? 'New' : (product.url.deleted ? 'Removed' : '');
       return rowData;
     });
 
@@ -202,24 +232,24 @@ const MainTable = ({ current, getBadgeData }) => {
   };
   const [messageApi, contextHolder] = message.useMessage();
 
-  const info = () => {
+  const info = (msg = null) => {
     messageApi.info({
-      content: "Please wait while we process it. You will be notified once it's completed",
+      content: msg ? msg : "Please wait while we process it. You will be notified once it's completed",
       className: 'custom-class',
-      style: {
-        marginTop: '10vh',
-      },
-      duration: 5,
+      // style: {
+      //   marginTop: '10vh',
+      // },
+      // duration: 5,
     });
   };
   const success = (msg) => {
     messageApi.open({
       type: 'success',
       content: msg,
-      duration: 5,
-      style: {
-        marginTop: '10vh'
-      }
+      // duration: 5,
+      // style: {
+      //   marginTop: '10vh'
+      // }
     });
   };
   const [modal2Open, setModal2Open] = useState(false);
@@ -276,7 +306,7 @@ const MainTable = ({ current, getBadgeData }) => {
   /* eslint-enable no-template-curly-in-string */
 
   const onFinish = (values) => {
-    axios.post(`https://scrapingback.onrender.com/${settings[current.toString().toLowerCase()].api[2]}`,values)
+    axios.post(`${API_URL}/${settings[current.toString().toLowerCase()].api[2]}`,values)
     .then(async res =>{
       if(res.data.message==="success"){
         success("Cron job date and email information are correctly");
@@ -284,12 +314,45 @@ const MainTable = ({ current, getBadgeData }) => {
       }
     })
   };
+
+  const updateLogByPusher = (message) => {
+    if (message) {
+      console.log(message)
+      setLogs( prevLogs => {
+        const exist = prevLogs.findIndex(l => l._id === message._id);
+        if (exist === -1) {
+          info(message.message);
+          return [...prevLogs, message]
+        } else {
+          return prevLogs;
+        }
+      });
+    }
+  }
+  const updateLogs = () => {
+    axios.get(`${API_URL}/logs?count=100`)
+      .then(async res => {
+        if (res.data.success) {
+          console.log(res.data.logs);
+          if ( res.data.logs) {
+            setLogs(res.data.logs.reverse());
+          }
+        }
+      })
+  }
+  const handleShowLogs = () => {
+    updateLogs();
+    setLogModalOpen(true);
+  }
+  const closeShowModal = () => {
+    setLogModalOpen(false);
+  }
   return (
     <>
       {
         contextHolder
       }
-      <div style={{ position: "fixed", zIndex: "100", top: "64px", padding: "0px 20px", justifyContent: "space-between", backgroundColor: "white", display: "flex", width: "86vw" }}>
+      <div style={{ position: "fixed", zIndex: "100", top: "64px", padding: "0px 20px", justifyContent: "space-between", backgroundColor: "white", display: "flex", width: "86vw", flexWrap: "wrap", gap: "10px" }}>
         <div style={{ display: "flex" }}>
           <div>
             <Select
@@ -317,16 +380,19 @@ const MainTable = ({ current, getBadgeData }) => {
 
         </div>
         <div>
-          <Button type='primary' disabled={loading} onClick={handleDownloadClick}>Download to Excel</Button>
-          <Button type='primary' disabled={loading} style={{ margin: "0px 10px", width: 130 }} onClick={handleStartScraping}>Start Scraping</Button>
-          <Button type="primary" onClick={modalControl} disabled={loading}>
-            Scraping History
+          <Button type='primary' disabled={loading} onClick={handleDownloadClick}>Download</Button>
+          <Button type='primary' disabled={loading} style={{ margin: "0px 10px"}} onClick={handleStartScraping}>Scraping</Button>
+          <Button type="primary" onClick={modalControl} disabled={loading}  style={{ marginRight: "10px" }}>
+            History
+          </Button>
+          <Button type="primary" onClick={handleShowLogs} disabled={loading}>
+            Logs
           </Button>
           {/* <Button type='primary' onClick={modalControl1} disabled={loading} danger style={{ margin: "10px" }}>Setting</Button> */}
           <Modal
-            title={`History that scrape in ${current} page`}
+            title={`${current} Scrape History`}
             centered
-            footer="Please use DatePicker Filter Function to see more detail product information"
+            footer="Please use DatePicker to filter the products by scrapted date"
 
             open={modal2Open}
             onOk={() => setModal2Open(false)}
@@ -336,12 +402,28 @@ const MainTable = ({ current, getBadgeData }) => {
               dataSource={modalData}
               key="2"
               columns={[
-                { title: 'Scraping Date', dataIndex: 'scrapingDate', key: 'scrapingDate', align: "center" },
-                { title: 'Added Amount', dataIndex: 'addedAccount', key: 'addedAccount', align: "center" },
-                { title: 'Deleted Amount', dataIndex: 'deletedAccount', key: 'deletedAccount', align: "center" },
+                { title: 'Date', dataIndex: 'scrapingDate', key: 'scrapingDate', align: "center" },
+                { title: 'New Products', dataIndex: 'addedAccount', key: 'addedAccount', align: "center" },
+                { title: 'Removed Products', dataIndex: 'deletedAccount', key: 'deletedAccount', align: "center" },
               ]}
               pagination={false} // Disable pagination if all data fits in the modal
             />
+          </Modal>
+          <Modal
+            title={`Logs`}
+            centered
+            open={logModalOpen}
+            onOk={() => closeShowModal()}
+            onCancel={() => closeShowModal()}
+            width={780}
+          >
+            <div style={{ maxHeight: '70vh', overflowY: 'auto'}}>
+              { logs.map((log, ind) => {
+                return <div key={ind} style={{ color: log.status === 'error' ? 'red': 'black'}}>
+                  <b>[{log.createdAt?.split('.')[0]}][{log.site}]</b> - {log.message}
+                </div>
+              })}
+            </div>
           </Modal>
           <Modal
             title={`Set Cron Job and Email infromation in ${current} page`}

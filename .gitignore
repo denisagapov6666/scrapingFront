@@ -20,6 +20,7 @@ dist/
 typings/
 
 # Optional npm cache directory
+.env
 .npm
 
 # Optional eslint cache
